@@ -1,14 +1,14 @@
 import torch
 import numpy as np
-from . import models
+from ...build.model import models
 from ... import utils
 
 model = models.BasicCNN()
-assert torch.cuda.is_available()
+# assert torch.cuda.is_available()
 
-device = torch.device(type="cuda")
+device = torch.device(type="cpu")
 
-model.load_state_dict(torch.load("blob/CNN.pt"))
+model.load_state_dict(torch.load("blob/CNN.pt", map_location=torch.device("cpu")))
 model = model.to(device)
 
 def inference(image: bytes) -> str:
